@@ -10,7 +10,10 @@ import { useContext } from 'react';
 import PokemonContext from '../PokemonContext';
 
 const PokemonTable = ({ onSelect }) => {
-  const { pokemon, filter } = useContext(PokemonContext);
+  const {
+    state: { filter, pokemon },
+    dispatch,
+  } = useContext(PokemonContext);
   return (
     <TableContainer component={Paper}>
       <Table aria-label='a dense table'>
@@ -31,7 +34,12 @@ const PokemonTable = ({ onSelect }) => {
               <PokemonRow
                 pokemon={pokemon}
                 key={pokemon.id}
-                onSelect={onSelect}
+                onClick={(pokemon) =>
+                  dispatch({
+                    type: 'SET_SELECTED_POKEMON',
+                    payload: pokemon,
+                  })
+                }
               />
             ))}
         </TableBody>
